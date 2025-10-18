@@ -12,7 +12,6 @@ data class BottomBarItem(
     val selectedIcon: Painter,
     val unselectedIcon: Painter,
     val unselecedColor: Int,
-    //val indicatorColor: Int = Color.BLACK,
 )
 
 @Composable

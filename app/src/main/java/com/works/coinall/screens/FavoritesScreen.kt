@@ -36,7 +36,7 @@ import com.works.coinall.view_model.FavoritesViewModel
 @SuppressLint("DefaultLocale")
 @Composable
 fun FavoriteScreen(
-    modifier: Modifier = Modifier.background(Color.Black),
+    modifier: Modifier = Modifier,
     viewModel: FavoritesViewModel = viewModel(),
     onNavigateToLiveDataScreen: () -> Unit,
     onNavigateToCoinDetailScreen: (String) -> Unit,
@@ -46,7 +46,7 @@ fun FavoriteScreen(
         onBack()
     }
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AppHeader(

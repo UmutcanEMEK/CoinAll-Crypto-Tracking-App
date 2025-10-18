@@ -40,7 +40,7 @@ import com.works.coinall.view_model.FavoritesViewModel
 @SuppressLint("DefaultLocale")
 @Composable
 fun LiveDataScreen(
-    modifier: Modifier = Modifier.background(Color.Black),
+    modifier: Modifier = Modifier,
     viewModel: CoinViewModel = viewModel(),
     viewModel2: FavoritesViewModel = viewModel(),
     onNavigateToCoinDetailScreen: (String) -> Unit,
@@ -51,7 +51,7 @@ fun LiveDataScreen(
     }
     val coins by viewModel.coins.collectAsState()
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
