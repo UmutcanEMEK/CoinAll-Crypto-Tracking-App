@@ -51,7 +51,9 @@ fun LiveDataScreen(
     }
     val coins by viewModel.coins.collectAsState()
     Column(
-        modifier = modifier.fillMaxSize().background(Color.Black),
+        modifier = modifier
+            .fillMaxSize()
+            .background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -67,7 +69,8 @@ fun LiveDataScreen(
         } else {
             coins.filter { coin ->
                 coin.name.contains(text, ignoreCase = true) ||
-                        coin.symbol.contains(text, ignoreCase = true)
+                        coin.symbol.contains(text, ignoreCase = true) ||
+                        coin.marketCapRank.toString() == text
             }
         }
         TextField(

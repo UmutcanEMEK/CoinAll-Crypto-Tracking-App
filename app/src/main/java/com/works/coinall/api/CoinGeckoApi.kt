@@ -8,6 +8,8 @@ interface CoinGeckoApi {
     @GET("coins/markets")
     suspend fun getCoins(
         @Query("vs_currency") vsCurrency: String,
+        @Query("per_page") perPage: Int,
+        @Query("page") page: Int,
         @Query("x_cg_demo_api_key") apiKey: String
     ): List<CoinDataClass>
 }
