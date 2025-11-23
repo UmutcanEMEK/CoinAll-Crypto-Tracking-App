@@ -64,7 +64,8 @@ fun MyApp(modifier: Modifier = Modifier) {
                     selectedCoinId = coinId
                     selectedIndex = 2
                 },
-                onBack = { selectedIndex = 0 }
+                onBack = { selectedIndex = 0 },
+                isLoading = true
             )
             1 -> FavoriteScreen(
                 onNavigateToLiveDataScreen = { selectedIndex = 0 },

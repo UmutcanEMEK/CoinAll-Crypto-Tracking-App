@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,6 +35,7 @@ import com.works.coinall.view_model.CoinViewModel
 import com.works.coinall.R
 import com.works.coinall.components.AppHeader
 import com.works.coinall.components.CoinListComponent
+import com.works.coinall.components.CoinListSkeleton
 import com.works.coinall.view_model.FavoritesViewModel
 
 
@@ -44,7 +46,8 @@ fun LiveDataScreen(
     viewModel: CoinViewModel = viewModel(),
     viewModel2: FavoritesViewModel = viewModel(),
     onNavigateToCoinDetailScreen: (String) -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    isLoading: Boolean
 ) {
     BackHandler {
         onBack()
@@ -108,16 +111,29 @@ fun LiveDataScreen(
             }
 
         )
-        LazyColumn(
-            modifier = Modifier.padding(top = 10.dp, start = 20.dp, end = 10.dp, bottom = 100.dp)
-        ) {
-            items(filteredCoins) { coin ->
-                CoinListComponent(
-                    modifier = Modifier,
-                    coin = coin,
-                    onNavigateToCoinDetailScreen = { onNavigateToCoinDetailScreen(coin.id) },
-                    viewModel2 = viewModel2,
+
+        // Skeleton yapısı
+        val isLoading = viewModel.isLoading
+
+        if (isLoading) {
+            CoinListSkeleton()
+        } else {
+
+            LazyColumn(
+                modifier = Modifier.padding(
+                    top = 10.dp,
+                    start = 20.dp,
+                    end = 10.dp, /*bottom = 100.dp*/
                 )
+            ) {
+                items(filteredCoins) { coin ->
+                    CoinListComponent(
+                        modifier = Modifier,
+                        coin = coin,
+                        onNavigateToCoinDetailScreen = { onNavigateToCoinDetailScreen(coin.id) },
+                        viewModel2 = viewModel2,
+                    )
+                }
             }
         }
     }

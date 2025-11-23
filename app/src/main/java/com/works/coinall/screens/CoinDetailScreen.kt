@@ -55,7 +55,6 @@ fun CoinDetailScreen(
 
     Column(
         modifier = Modifier
-            .padding(bottom = 100.dp)
             .background(Color.Black)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally

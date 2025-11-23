@@ -1,6 +1,9 @@
 package com.works.coinall.view_model
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.works.coinall.model.CoinDataClass
@@ -12,16 +15,22 @@ import kotlinx.coroutines.launch
 
 class CoinViewModel : ViewModel() {
 
+    // Skeleton durumu
+    var isLoading by mutableStateOf(true)
+        private set
+
     private val _coins = MutableStateFlow<List<CoinDataClass>>(emptyList())
     val coins: StateFlow<List<CoinDataClass>> = _coins
 
     init {
+        // Uygulama açılır açılmaz veriyi yükle
         getCoins()
     }
 
     private fun getCoins() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
+
                 val allCoins = mutableListOf<CoinDataClass>()
                 var currentPage = 1
                 val perPage = 250
@@ -36,18 +45,26 @@ class CoinViewModel : ViewModel() {
                     )
 
                     Log.d("API_TEST", "Page $currentPage -> ${fetched.size} coins")
+
                     if (fetched.isNotEmpty()) {
                         allCoins.addAll(fetched)
                         currentPage++
                     }
 
-                } while (fetched.isNotEmpty() && currentPage <= 6)
+                } while (fetched.isNotEmpty() && currentPage <= 8)
 
                 _coins.value = allCoins
+
                 Log.d("API_TEST", "Total coins fetched: ${allCoins.size}")
+
+                //VERİ GELDİĞİ ANDA SKELETON’I KAPAT
+                isLoading = false
 
             } catch (e: Exception) {
                 Log.e("API_TEST", "Error: ${e.message}")
+
+                //hata varsa skeleton açık kalamay devam eder
+                isLoading = true
             }
         }
     }
